@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>สแกนแผล</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(to bottom, #e6f2ff, #ffffff);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Header */
+.header {
+  width: 100%;
+  background: #007bff;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* กล้องเต็มหน้าจอ */
+video {
+  width: 100%;
+  height: calc(100vh - 140px);
+  object-fit: cover;
+  background: black;
+}
+
+/* ปุ่ม */
+.controls {
+  width: 100%;
+  padding: 15px;
+  background: white;
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  padding: 14px 30px;
+  font-size: 16px;
+  border: none;
+  border-radius: 30px;
+  background: #007bff;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #0056b3;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  สแกนแผลด้วยกล้อง
+</div>
+
+<video id="camera" autoplay playsinline></video>
+
+<div class="controls">
+  <button id="openCamera">เริ่มสแกน</button>
+</div>
+
+<script>
+const button = document.getElementById("openCamera");
+const video = document.getElementById("camera");
+
+button.onclick = async () => {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        facingMode: { ideal: "environment" },
+        width: { ideal: 1920 },
+        height: { ideal: 1080 }
+      },
+      audio: false
+    });
+
+    video.srcObject = stream;
+  } catch (error) {
+    alert("ไม่สามารถเข้าถึงกล้องได้ กรุณาอนุญาตกล้อง");
+  }
+};
+</script>
+
+</body>
+</html>
